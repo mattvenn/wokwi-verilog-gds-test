@@ -11,14 +11,14 @@ set ::env(RUN_KLAYOUT_DRC) 0
 set ::env(PL_RESIZER_BUFFER_OUTPUT_PORTS) 0
 
 # Change if needed
-set ::env(VERILOG_FILES) "$::env(DESIGN_DIR)/src/wokwi.v"
+set ::env(VERILOG_FILES) "$::env(DESIGN_DIR)/wokwi.v"
 
 set ::env(FP_SIZING) absolute
 set ::env(DIE_AREA) "0 0 70 70"
 set ::env(PL_TARGET_DENSITY) 0.75
 
 # Fill this
-set ::env(CLOCK_PERIOD) "10"
+set ::env(CLOCK_PERIOD) "100"
 set ::env(CLOCK_PORT) "clk"
 
 set ::env(DESIGN_IS_CORE) 0
