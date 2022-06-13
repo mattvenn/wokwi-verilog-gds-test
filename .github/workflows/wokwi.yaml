@@ -2,7 +2,7 @@ name: wokwi
 # either manually started, or on a schedule
 on: [ push, workflow_dispatch ]
 jobs:
-  multi_tool:
+  wokwi:
     env:
         OPENLANE_TAG:   2021.11.23_01.42.34
         OPENLANE_IMAGE_NAME:    efabless/openlane:$OPENLANE_TAG
@@ -24,12 +24,12 @@ jobs:
 #        python-version: '3.7.7' # install the python version needed
 
     # build pdk
-#    - name: pdk & caravel
-#      run: |
-#        cd $HOME
-#        git clone https://github.com/efabless/caravel_user_project.git -b mpw-6c
-#        cd caravel_user_project
-#        make setup
+    - name: pdk & caravel
+      run: |
+        cd $HOME
+        git clone https://github.com/efabless/caravel_user_project.git -b mpw-6c
+        cd caravel_user_project
+        make setup
 
     - name: fetch Verilog
       run: make fetch
@@ -43,6 +43,7 @@ jobs:
       with:
           name: Wrapper GDS
           path: /home/runner/caravel_user_project/gds/user_project_wrapper.gds
+  #cp runs/adder/results/finishing/instrumented_adder.spice spice/instrumented_adder.spice
 
     - name: Archive Wrapper Signoff
       uses: actions/upload-artifact@v2
