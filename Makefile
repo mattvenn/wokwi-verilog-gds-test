@@ -1,4 +1,5 @@
-WOKWI_PROJECT_ID=334335179919196756
+WOKWI_PROJECT_ID=334348818476696146
+# the clock divider 334335179919196756
 fetch:
 	curl https://wokwi.com/api/projects/$(WOKWI_PROJECT_ID)/verilog > src/wokwi.v
 
