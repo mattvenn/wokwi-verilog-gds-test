@@ -1,5 +1,6 @@
+WOKWI_PROJECT_ID=334335179919196756
 fetch:
-	curl https://wokwi.com/api/projects/334295537442357843/verilog > src/wokwi.v
+	curl https://wokwi.com/api/projects/$(WOKWI_PROJECT_ID)/verilog > src/wokwi.v
 
 # needs PDK_ROOT and OPENLANE_ROOT, OPENLANE_IMAGE_NAME set from your environment
 harden:
