@@ -5,7 +5,7 @@ jobs:
   wokwi:
     env:
         OPENLANE_TAG:   2021.11.23_01.42.34
-        OPENLANE_IMAGE_NAME:    efabless/openlane:$OPENLANE_TAG
+        OPENLANE_IMAGE_NAME:    efabless/openlane:$(OPENLANE_TAG)
         OPENLANE_ROOT:  /home/runner/openlane
         PDK_ROOT:       /home/runner/pdk
         PDK:            sky130A
@@ -37,16 +37,13 @@ jobs:
     - name: make GDS
       run: make harden
 
-    # archive the gds and final report for the user project wrapper
-    - name: Archive Wrapper GDS
-      uses: actions/upload-artifact@v2
-      with:
-          name: Wrapper GDS
-          path: /home/runner/caravel_user_project/gds/user_project_wrapper.gds
-  #cp runs/adder/results/finishing/instrumented_adder.spice spice/instrumented_adder.spice
+    - name: show files
+      run: find runs/wokwi/results
 
-    - name: Archive Wrapper Signoff
+    # archive the gds and final report for the user project wrapper
+    - name: Archive GDS
       uses: actions/upload-artifact@v2
       with:
-          name: Wrapper Report
-          path: /home/runner/caravel_user_project/openlane/user_project_wrapper/runs/user_project_wrapper/reports/final_summary_report.csv
+          name: GDS
+          path: runs/wokwi/results/final/gds/wokwi.gds
+
