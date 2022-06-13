@@ -1,0 +1,51 @@
+name: wokwi
+# either manually started, or on a schedule
+on: [ push, workflow_dispatch ]
+jobs:
+  multi_tool:
+    env:
+        OPENLANE_TAG:   2021.11.23_01.42.34
+        OPENLANE_IMAGE_NAME:    efabless/openlane:$OPENLANE_TAG
+        OPENLANE_ROOT:  /home/runner/openlane
+        PDK_ROOT:       /home/runner/pdk
+        PDK:            sky130A
+
+    # ubuntu
+    runs-on: ubuntu-latest
+    steps:
+    # need the repo checked out
+    - name: checkout repo
+      uses: actions/checkout@v2
+
+    # need python
+#    - name: setup python
+#      uses: actions/setup-python@v2
+#      with:
+#        python-version: '3.7.7' # install the python version needed
+
+    # build pdk
+#    - name: pdk & caravel
+#      run: |
+#        cd $HOME
+#        git clone https://github.com/efabless/caravel_user_project.git -b mpw-6c
+#        cd caravel_user_project
+#        make setup
+
+    - name: fetch Verilog
+      run: make fetch
+
+    - name: make GDS
+      run: make harden
+
+    # archive the gds and final report for the user project wrapper
+    - name: Archive Wrapper GDS
+      uses: actions/upload-artifact@v2
+      with:
+          name: Wrapper GDS
+          path: /home/runner/caravel_user_project/gds/user_project_wrapper.gds
+
+    - name: Archive Wrapper Signoff
+      uses: actions/upload-artifact@v2
+      with:
+          name: Wrapper Report
+          path: /home/runner/caravel_user_project/openlane/user_project_wrapper/runs/user_project_wrapper/reports/final_summary_report.csv
