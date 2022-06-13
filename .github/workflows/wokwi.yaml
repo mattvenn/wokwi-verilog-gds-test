@@ -17,11 +17,12 @@ jobs:
     - name: checkout repo
       uses: actions/checkout@v2
 
-    # need python
-#    - name: setup python
-#      uses: actions/setup-python@v2
-#      with:
-#        python-version: '3.7.7' # install the python version needed
+    - name: setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.7.7'
+        cache: 'pip'
+    - run: pip install -r requirements.txt
 
     # build pdk
     - name: pdk & caravel
@@ -41,11 +42,22 @@ jobs:
     - name: show files
       run: find runs/wokwi/results
 
-    # archive the gds and final report for the user project wrapper
+    - name: create svg
+      run: python view.py
+
+    # archive the gds
     - name: Archive GDS
       uses: actions/upload-artifact@v2
       with:
           # path depends on the tag and the module name
           name: GDS
           path: runs/wokwi/results/final/gds/user_module.gds
+
+    # archive the svg render
+    - name: Archive SVG
+      uses: actions/upload-artifact@v2
+      with:
+          # path depends on the tag and the module name
+          name: SVG
+          path: gds_render.svg
 
