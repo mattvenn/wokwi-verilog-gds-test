@@ -4,7 +4,7 @@ on: [ push, workflow_dispatch ]
 jobs:
   wokwi:
     env:
-        OPENLANE_TAG:   2021.11.23_01.42.34
+        OPENLANE_TAG:   2022.02.23_02.50.41
         OPENLANE_IMAGE_NAME:    efabless/openlane:$(OPENLANE_TAG)
         OPENLANE_ROOT:  /home/runner/openlane
         PDK_ROOT:       /home/runner/pdk
