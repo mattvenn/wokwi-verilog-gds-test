@@ -31,8 +31,9 @@ jobs:
         cd caravel_user_project
         make setup
 
-    - name: fetch Verilog
-      run: make fetch
+# remove for now until wokwi appends _cell to all cell names in verilog
+#    - name: fetch Verilog
+#      run: make fetch
 
     - name: make GDS
       run: make harden
