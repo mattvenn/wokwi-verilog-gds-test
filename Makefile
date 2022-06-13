@@ -10,5 +10,5 @@ harden:
 	-e PDK_ROOT=$(PDK_ROOT) \
 	-u $(shell id -u $(USER)):$(shell id -g $(USER)) \
 	$(OPENLANE_IMAGE_NAME) \
-	/bin/bash -c "./flow.tcl -overwrite -design /work/src -run_path /work/runs -tag adder"
+	/bin/bash -c "./flow.tcl -overwrite -design /work/src -run_path /work/runs -tag wokwi"
 
