@@ -44,6 +44,7 @@ jobs:
     - name: Archive GDS
       uses: actions/upload-artifact@v2
       with:
+          # path depends on the tag and the module name
           name: GDS
-          path: runs/wokwi/results/final/gds/wokwi.gds
+          path: runs/wokwi/results/final/gds/user_module.gds
 

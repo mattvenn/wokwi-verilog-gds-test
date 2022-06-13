@@ -1,7 +1,8 @@
 # User config
 set script_dir [file dirname [file normalize [info script]]]
 
-set ::env(DESIGN_NAME) wokwi
+# has to match the module name from wokwi
+set ::env(DESIGN_NAME) user_module
 
 # save some time
 set ::env(RUN_KLAYOUT_XOR) 0
@@ -11,7 +12,8 @@ set ::env(RUN_KLAYOUT_DRC) 0
 set ::env(PL_RESIZER_BUFFER_OUTPUT_PORTS) 0
 
 # Change if needed
-set ::env(VERILOG_FILES) "$::env(DESIGN_DIR)/wokwi.v"
+set ::env(VERILOG_FILES) "$::env(DESIGN_DIR)/wokwi.v \
+    $::env(DESIGN_DIR)/cells.v"
 
 set ::env(FP_SIZING) absolute
 set ::env(DIE_AREA) "0 0 70 70"
