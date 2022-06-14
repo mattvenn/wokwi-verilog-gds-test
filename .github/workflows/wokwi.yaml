@@ -57,8 +57,8 @@ jobs:
           name: GDS
           path: |
             runs/wokwi/results/final/gds/user_module.gds
-            reports/final_summary_report.csv
-            reports/synthesis/1-synthesis.stat.rpt.strategy4
+            runs/wokwi/reports/final_summary_report.csv
+            runs/wokwi/reports/synthesis/1-synthesis.stat.rpt.strategy4
             gds_render.svg
 
     # archive the svg render
