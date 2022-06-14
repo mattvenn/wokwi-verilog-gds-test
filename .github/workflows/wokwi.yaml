@@ -50,18 +50,22 @@ jobs:
       run: python view.py
 
     # archive the gds
-    - name: Archive GDS
+    - name: Archive files
       uses: actions/upload-artifact@v2
       with:
           # path depends on the tag and the module name
           name: GDS
-          path: runs/wokwi/results/final/gds/user_module.gds
+          path: |
+            runs/wokwi/results/final/gds/user_module.gds
+            reports/final_summary_report.csv
+            reports/synthesis/1-synthesis.stat.rpt.strategy4
+            gds_render.svg
 
     # archive the svg render
-    - name: Archive SVG
-      uses: actions/upload-artifact@v2
-      with:
-          # path depends on the tag and the module name
-          name: SVG
-          path: gds_render.svg
+  #  - name: Archive SVG
+   #   uses: actions/upload-artifact@v2
+    #  with:
+     #     # path depends on the tag and the module name
+      #    name: SVG
+       #   path: gds_render.svg
 
