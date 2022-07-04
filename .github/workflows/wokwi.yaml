@@ -29,7 +29,7 @@ jobs:
       with:
         path: "requirements.txt"
 
-    # build pdk
+    # build PDK and fetch OpenLane
     - name: pdk & caravel
       run: |
         cd $HOME
@@ -37,19 +37,23 @@ jobs:
         cd caravel_user_project
         make setup
 
+    # fetch the Verilog from Wokwi API
     - name: fetch Verilog
       run: make fetch
 
+    # run the 'harden' rule in the Makefile to use OpenLane to build the GDS
     - name: make GDS
       run: make harden
 
+    # for debugging, show all the files
     - name: show files
       run: find runs/wokwi/results
 
+    # make the SVG
     - name: create svg
       run: python view.py
 
-    # archive the gds
+    # archive the gds and some other important files
     - name: Archive files
       uses: actions/upload-artifact@v2
       with:
@@ -60,12 +64,4 @@ jobs:
             runs/wokwi/reports/final_summary_report.csv
             runs/wokwi/reports/synthesis/1-synthesis.stat.rpt.strategy4
             gds_render.svg
-
-    # archive the svg render
-  #  - name: Archive SVG
-   #   uses: actions/upload-artifact@v2
-    #  with:
-     #     # path depends on the tag and the module name
-      #    name: SVG
-       #   path: gds_render.svg
 
