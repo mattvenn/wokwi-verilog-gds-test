@@ -4,11 +4,11 @@ on: [ push, workflow_dispatch ]
 jobs:
   wokwi:
     env:
-        OPENLANE_TAG:   2022.02.23_02.50.41
+        OPENLANE_TAG:   2022.07.02_01.38.08
         OPENLANE_IMAGE_NAME:    efabless/openlane:$(OPENLANE_TAG)
         OPENLANE_ROOT:  /home/runner/openlane
         PDK_ROOT:       /home/runner/pdk
-        PDK:            sky130A
+        PDK:            sky130B
 
     # ubuntu
     runs-on: ubuntu-latest
@@ -33,7 +33,7 @@ jobs:
     - name: pdk & caravel
       run: |
         cd $HOME
-        git clone https://github.com/efabless/caravel_user_project.git -b mpw-6c
+        git clone https://github.com/efabless/caravel_user_project.git -b mpw-7a
         cd caravel_user_project
         make setup
 
