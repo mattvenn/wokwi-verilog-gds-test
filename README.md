@@ -8,7 +8,7 @@ Edit the [Makefile](Makefile) and change the WOKWI_PROJECT_ID to match your proj
 
 This repo is a template you can make a copy of for your own [ASIC](https://www.zerotoasiccourse.com/terminology/asic/) design using [Wokwi](https://wokwi.com/).
 
-When you edit the Makefile to choose a different ID, the [GitHub Action](https://github.com/features/actions) will fetch the digital netlist of your design from Wokwi.
+When you edit the Makefile to choose a different ID, the [GitHub Action](.github/workflows/wokwi.yaml) will fetch the digital netlist of your design from Wokwi.
 
 The design gets wrapped in some extra logic that builds a 'scan chain'. This is a way to put lots of designs onto one chip and still have access to them all. You can see [all of the technical details here](https://github.com/mattvenn/scan_wrapper).
 
