@@ -60,8 +60,7 @@ jobs:
           # path depends on the tag and the module name
           name: GDS
           path: |
-            runs/wokwi/results/final/gds/*.gds
-            runs/wokwi/results/final/lef/*.gds
+            runs/wokwi/results/final/*
             runs/wokwi/reports/final_summary_report.csv
             runs/wokwi/reports/synthesis/1-synthesis.stat.rpt.strategy4
             gds_render.svg
