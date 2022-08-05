@@ -9,7 +9,7 @@
 `endif
 */
 
-module scan_wrapper (
+module scan_wrapper_USER_MODULE_ID (
     input wire clk_in,
     input wire data_in,
     input wire scan_select_in,
@@ -25,6 +25,7 @@ module scan_wrapper (
     assign clk_out = clk_in;
     wire clk = clk_in;
 
+    /*
     `ifdef COCOTB
     initial begin
         $dumpfile ("scan_wrapper.vcd");
@@ -32,6 +33,7 @@ module scan_wrapper (
         #1;
     end
     `endif
+    */
 
     parameter NUM_IOS = 8;
 
@@ -74,7 +76,7 @@ module scan_wrapper (
     `endif
 
     // instantiate the wokwi module
-    user_module_334445762078310996 user_module(
+    user_module_USER_MODULE_ID user_module(
         .clk       (module_data_in[0]),
         .reset     (module_data_in[1]),
         .io_in     (module_data_in),
