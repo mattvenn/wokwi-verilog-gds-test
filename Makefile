@@ -3,7 +3,7 @@ WOKWI_PROJECT_ID=334445762078310996
 # 4 inverters 334348818476696146
 # the clock divider 334335179919196756
 fetch:
-	curl https://wokwi.com/api/projects/$(WOKWI_PROJECT_ID)/verilog > src/wokwi.v
+	curl https://wokwi.com/api/projects/$(WOKWI_PROJECT_ID)/verilog > src/user_module_$(WOKWI_PROJECT_ID).v
 
 # needs PDK_ROOT and OPENLANE_ROOT, OPENLANE_IMAGE_NAME set from your environment
 harden:

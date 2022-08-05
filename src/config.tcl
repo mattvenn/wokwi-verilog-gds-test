@@ -14,10 +14,8 @@ set ::env(PL_RESIZER_BUFFER_OUTPUT_PORTS) 0
 # allow use of specific sky130 cells
 set ::env(SYNTH_READ_BLACKBOX_LIB) 1
 
-# Change if needed
-set ::env(VERILOG_FILES) "$::env(DESIGN_DIR)/wokwi.v \
-    $::env(DESIGN_DIR)/scan_wrapper.v \
-    $::env(DESIGN_DIR)/cells.v"
+# read all verilog files
+set ::env(VERILOG_FILES) [glob $::env(DESIGN_DIR)/*.v]
 
 set ::env(FP_SIZING) absolute
 set ::env(DIE_AREA) "0 0 100 100"
