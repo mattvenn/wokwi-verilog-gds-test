@@ -1,4 +1,4 @@
-[![wokwi](https://github.com/mattvenn/wokwi-verilog-gds-test/actions/workflows/wokwi.yaml/badge.svg)](https://github.com/mattvenn/wokwi-verilog-gds-test/actions/workflows/wokwi.yaml)
+![](../../workflows/wokwi/badge.svg)
 
 # How to change the Wokwi project
 
