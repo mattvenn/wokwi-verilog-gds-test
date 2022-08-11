@@ -27,4 +27,4 @@ When the action is complete, you can [click here](https://github.com/mattvenn/wo
 
 # What next?
 
-* Share your GDS on twitter and link to us!
+* Share your GDS on twitter, tag it #tinytapeout and [link me](https://twitter.com/matthewvenn)!
