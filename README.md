@@ -1,5 +1,7 @@
 ![](../../workflows/wokwi/badge.svg)
 
+Go to https://tinytapeout.com for instructions!
+
 # How to change the Wokwi project
 
 Edit the [Makefile](Makefile) and change the WOKWI_PROJECT_ID to match your project.
@@ -26,4 +28,3 @@ When the action is complete, you can [click here](https://github.com/mattvenn/wo
 # What next?
 
 * Share your GDS on twitter and link to us!
-* If you want your design to be fabricated, we are aiming to do this for around $100. Let me know if [you're interested in participating](https://docs.google.com/forms/d/1ArnCrpKvf8IC4ouLv_lIwV_8ObRSTTtUYgfZqWvY9-k/edit).
