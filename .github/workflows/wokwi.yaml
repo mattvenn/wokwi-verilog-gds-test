@@ -1,0 +1,68 @@
+name: wokwi
+# either manually started, or on a schedule
+on: [ push, workflow_dispatch ]
+jobs:
+  wokwi:
+    env:
+        OPENLANE_TAG:   2022.02.23_02.50.41
+        OPENLANE_IMAGE_NAME:    efabless/openlane:$(OPENLANE_TAG)
+        OPENLANE_ROOT:  /home/runner/openlane
+        PDK_ROOT:       /home/runner/pdk
+        PDK:            sky130A
+
+    # ubuntu
+    runs-on: ubuntu-latest
+    steps:
+    # need the repo checked out
+    - name: checkout repo
+      uses: actions/checkout@v2
+
+    # caching version seems broken atm
+    - name: setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.7.7' # install the python version needed
+
+    # python deps from reqirements file, use a marketplace action
+    - name: Install Python dependencies
+      uses: py-actions/py-dependency-install@v2
+      with:
+        path: "requirements.txt"
+
+    # build PDK and fetch OpenLane
+    - name: pdk & caravel
+      run: |
+        cd $HOME
+        git clone https://github.com/efabless/caravel_user_project.git -b mpw-6c
+        cd caravel_user_project
+        make setup
+
+    # fetch the Verilog from Wokwi API
+    - name: fetch Verilog
+      run: make fetch
+
+    # run the 'harden' rule in the Makefile to use OpenLane to build the GDS
+    - name: make GDS
+      run: make harden
+
+    # for debugging, show all the files
+    - name: show files
+      run: find runs/wokwi/results
+
+    # make the SVG
+    - name: create svg
+      run: python view.py
+
+    # archive the gds and some other important files
+    - name: Archive files
+      uses: actions/upload-artifact@v2
+      with:
+          # path depends on the tag and the module name
+          name: GDS
+          path: |
+            src/*
+            runs/wokwi/results/final/*
+            runs/wokwi/reports/final_summary_report.csv
+            runs/wokwi/reports/synthesis/1-synthesis.stat.rpt.strategy4
+            gds_render.svg
+
