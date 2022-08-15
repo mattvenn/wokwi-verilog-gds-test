@@ -1,9 +1,11 @@
-WOKWI_PROJECT_ID=334445762078310996
-# logic puzzle and muxes
-# 4 inverters 334348818476696146
-# the clock divider 334335179919196756
+# HACK: We need a unique ID for the verilog files so they can exist harmoniously with the rest of the
+# designs that are submitted. So, even if we're not using Wokwi, copy the template project and enter
+# the ID below as the WOKWI_PROJECT_ID so we get a guaranteed unique ID:
+WOKWI_PROJECT_ID=339898704941023827
+
 fetch:
-	curl https://wokwi.com/api/projects/$(WOKWI_PROJECT_ID)/verilog > src/user_module_$(WOKWI_PROJECT_ID).v
+# HACK: we don't need to fetch this as we have our own verilog source, manually created: src/user_module_339898704941023827.v
+#	curl https://wokwi.com/api/projects/$(WOKWI_PROJECT_ID)/verilog > src/user_module_$(WOKWI_PROJECT_ID).v
 	sed -e 's/USER_MODULE_ID/$(WOKWI_PROJECT_ID)/g' template/scan_wrapper.v > src/scan_wrapper_$(WOKWI_PROJECT_ID).v
 	sed -e 's/USER_MODULE_ID/$(WOKWI_PROJECT_ID)/g' template/config.tcl > src/config.tcl
 	echo $(WOKWI_PROJECT_ID) > src/ID
@@ -18,4 +20,3 @@ harden:
 	-u $(shell id -u $(USER)):$(shell id -g $(USER)) \
 	$(OPENLANE_IMAGE_NAME) \
 	/bin/bash -c "./flow.tcl -overwrite -design /work/src -run_path /work/runs -tag wokwi"
-
