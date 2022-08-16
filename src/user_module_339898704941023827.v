@@ -23,6 +23,8 @@ module user_module_339898704941023827(
   reg [23:0] counter;
   reg [3:0] state;
 
+  reg [7:0] led_out;
+
   //always @(posedge CLK) begin
   always @(posedge io_in[0]) begin
     counter <= counter + 1;
@@ -31,22 +33,23 @@ module user_module_339898704941023827(
       state <= state + 1;
 
     case(state)
-      4'b0000 : io_out = letter_h;
-      4'b0001 : io_out = letter_e;
-      4'b0010 : io_out = letter_l;
-      4'b0011 : io_out = letter_l;
-      4'b0100 : io_out = letter_o;
-      4'b0101 : io_out = letter_blank;
-      4'b0110 : io_out = letter_a;
-      4'b0111 : io_out = letter_s;
-      4'b1000 : io_out = letter_i;
-      4'b1001 : io_out = letter_c;
-      4'b1010 : io_out = letter_blank;
-      4'b1011 : io_out = letter_blank;
+      4'b0000 : led_out = letter_h;
+      4'b0001 : led_out = letter_e;
+      4'b0010 : led_out = letter_l;
+      4'b0011 : led_out = letter_l;
+      4'b0100 : led_out = letter_o;
+      4'b0101 : led_out = letter_blank;
+      4'b0110 : led_out = letter_a;
+      4'b0111 : led_out = letter_s;
+      4'b1000 : led_out = letter_i;
+      4'b1001 : led_out = letter_c;
+      4'b1010 : led_out = letter_blank;
+      4'b1011 : led_out = letter_blank;
       //4'b1100 : state = 0; // this somehow breaks things?
-      default : io_out = letter_blank;
+      default : led_out = letter_blank;
     endcase
-
   end
+
+  assign io_out = led_out;
 
 endmodule
