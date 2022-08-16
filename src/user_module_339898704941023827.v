@@ -7,13 +7,14 @@ module user_module_339898704941023827(
 );
 
   wire clk;
-  //assign clk = TINY_CLK, // XXX: for testing with real hardware
+  //assign clk = TINY_CLK; // XXX: for testing with real hardware
   assign clk = io_in[0];
   wire reset;
   assign reset = io_in[1];
 
   reg [23:0] counter = 0;
-  reg [3:0] state = 0;
+  reg [3:0] state = 4'b0000;
+  reg led = 0;
 
   // patterns for common anode wiring
                        //76543210
@@ -34,10 +35,12 @@ module user_module_339898704941023827(
     if (reset) begin
         counter <= 0;
         state <= 0;
+        led_out <= letter_blank;
     end else begin
       counter <= counter + 1;
       if (counter[23])
-        state <= state + 1;
+        state <= state + 4'b0001;
+        //led <= ~led;
     end
 
     case(state)
@@ -57,8 +60,11 @@ module user_module_339898704941023827(
 
       default : led_out <= letter_blank;
     endcase
+
+
   end
 
   assign io_out = led_out;
+  //assign io_out[6] = led;
 
 endmodule
