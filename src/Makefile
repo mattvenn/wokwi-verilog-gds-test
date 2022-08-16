@@ -1,6 +1,8 @@
-# from: https://gist.github.com/DurandA/15c83f37ee64b185801f88fbe0a0f25c
+# bits from: https://gist.github.com/DurandA/15c83f37ee64b185801f88fbe0a0f25c
+# and: https://github.com/mattvenn/rgb_mixer/blob/main/Makefile
 
-PROJ = user_module_339898704941023827
+PROJ = sevenseg_top
+SOURCES= sevenseg_top.v user_module_339898704941023827.v
 PIN_DEF = pins.pcf
 DEVICE = lp8k
 PACKAGE = cm81
@@ -9,8 +11,8 @@ all: $(PROJ).bin
 
 sim: $(PROJ)_tb.vcd
 
-%.json: %.v
-	yosys -p 'synth_ice40 -top $(PROJ) -json $@' $<
+%.json: $(SOURCES)
+	yosys -p 'synth_ice40 -top $(PROJ) -json $(PROJECT).json' $(SOURCES)
 
 %.asc: %.json $(PIN_DEF)
 	nextpnr-ice40 --$(DEVICE) --package $(PACKAGE) --json $< --pcf $(PIN_DEF) --asc $@ --ignore-loops
@@ -47,4 +49,4 @@ clean:
 	rm -f $(PROJ).blif $(PROJ).asc $(PROJ).rpt $(PROJ).bin $(PROJ).json $(PROJ)_tb.vvp $(PROJ)_tb.vcd
 
 .SECONDARY:
-.PHONY: all prog clean
+.PHONY: all sim prog clean

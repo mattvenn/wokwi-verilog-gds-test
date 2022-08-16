@@ -1,21 +1,22 @@
 `default_nettype none
 
+// Keep I/O fixed for TinyTapeout
 module user_module_339898704941023827(
-  //input TINY_CLK, // XXX: for testing with real hardware
-  input [7:0] io_in, //using io_in[0] as clk, io_in[1] as reset
+  input [7:0] io_in, 
   output [7:0] io_out
 );
 
+  // using io_in[0] as clk, io_in[1] as reset
   wire clk;
-  //assign clk = TINY_CLK; // XXX: for testing with real hardware
   assign clk = io_in[0];
   wire reset;
   assign reset = io_in[1];
 
-  reg [23:0] counter = 0;
-  reg [3:0] state = 4'b0000;
-  reg led = 0;
+  reg [21:0] counter = 0; // XXX: What is the clk freq for TT?
+  reg [4:0] state = 5'b00000;
+  //reg led = 0;
 
+  // XXX: Are we using CA/CC 7seg for TT board?
   // patterns for common anode wiring
                        //76543210
                        //xGFEDCBA
@@ -37,31 +38,40 @@ module user_module_339898704941023827(
         state <= 0;
         led_out <= letter_blank;
     end else begin
-      counter <= counter + 1;
-      if (counter[23])
-        state <= state + 4'b0001;
+      if (counter == 0) begin // overflow
+        state <= state + 5'b00001;
         //led <= ~led;
+      end
+
+      counter <= counter + 1;
     end
 
     case(state)
-      4'b0000 : led_out <= letter_h;
-      4'b0001 : led_out <= letter_e;
-      4'b0010 : led_out <= letter_l;
-      4'b0011 : led_out <= letter_l;
-      4'b0100 : led_out <= letter_o;
-      4'b0101 : led_out <= letter_blank;
-      4'b0110 : led_out <= letter_a;
-      4'b0111 : led_out <= letter_s;
-      4'b1000 : led_out <= letter_i;
-      4'b1001 : led_out <= letter_c;
-      4'b1010 : led_out <= letter_blank;
-      4'b1011 : led_out <= letter_blank;
-      4'b1100 : state <= 0; // reset
+      5'b00000 : led_out <= letter_h;
+      5'b00001 : led_out <= letter_blank;
+      5'b00010 : led_out <= letter_e;
+      5'b00011 : led_out <= letter_blank;
+      5'b00100 : led_out <= letter_l;
+      5'b00101 : led_out <= letter_blank;
+      5'b00110 : led_out <= letter_l;
+      5'b00111 : led_out <= letter_blank;
+      5'b01000 : led_out <= letter_o;
+      5'b01001 : led_out <= letter_blank;
+      5'b01010 : led_out <= letter_blank;
+      5'b01011 : led_out <= letter_a;
+      5'b01100 : led_out <= letter_blank;
+      5'b01101 : led_out <= letter_s;
+      5'b01110 : led_out <= letter_blank;
+      5'b01111 : led_out <= letter_i;
+      5'b10000 : led_out <= letter_blank;
+      5'b10001 : led_out <= letter_c;
+      5'b10010 : led_out <= letter_blank;
+      5'b10011 : led_out <= letter_blank;
+      5'b10100 : led_out <= letter_blank;
+      5'b10101 : state <= 0; // reset
 
       default : led_out <= letter_blank;
     endcase
-
-
   end
 
   assign io_out = led_out;
