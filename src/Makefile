@@ -42,7 +42,7 @@ sudo-prog: $(PROJ).bin
 	sudo tinyprog -p $<
 
 clean:
-	rm -f $(PROJ).blif $(PROJ).asc $(PROJ).rpt $(PROJ).bin $(PROJ).json
+	rm -f $(PROJ).blif $(PROJ).asc $(PROJ).rpt $(PROJ).bin $(PROJ).json $(PROJ)_tb.vvp $(PROJ)_tb.vcd
 
 .SECONDARY:
 .PHONY: all prog clean
