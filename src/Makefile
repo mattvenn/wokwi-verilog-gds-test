@@ -7,6 +7,8 @@ PACKAGE = cm81
 
 all: $(PROJ).bin
 
+sim: $(PROJ)_tb.vcd
+
 %.json: %.v
 	yosys -p 'synth_ice40 -top $(PROJ) -json $@' $<
 
@@ -20,10 +22,10 @@ all: $(PROJ).bin
 	icetime -d $(DEVICE) -mtr $@ $<
 
 %_tb: %_tb.v %.v
-	iverilog -o $@ $^
+	iverilog -o $@.vvp $^
 
 %_tb.vcd: %_tb
-	vvp -N $< +vcd=$@
+	vvp -N $<.vvp +vcd=$@
 
 %_syn.v: %.blif
 	yosys -p 'read_blif -wideports $^; write_verilog $@'
@@ -32,7 +34,7 @@ all: $(PROJ).bin
 	iverilog -o $@ $^ `yosys-config --datdir/ice40/cells_sim.v`
 
 %_syntb.vcd: %_syntb
-	vvp -N $< +vcd=$@
+	vvp -N $<.vvp +vcd=$@
 
 prog: $(PROJ).bin
 	tinyprog -p $<
