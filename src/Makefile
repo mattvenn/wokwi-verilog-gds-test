@@ -12,7 +12,7 @@ all: $(PROJ).bin
 sim: $(PROJ)_tb.vcd
 
 %.json: $(SOURCES)
-	yosys -p 'synth_ice40 -top $(PROJ) -json $(PROJECT).json' $(SOURCES)
+	yosys -p 'synth_ice40 -top $(PROJ) -json $(PROJ).json' $(SOURCES)
 
 %.asc: %.json $(PIN_DEF)
 	nextpnr-ice40 --$(DEVICE) --package $(PACKAGE) --json $< --pcf $(PIN_DEF) --asc $@ --ignore-loops
