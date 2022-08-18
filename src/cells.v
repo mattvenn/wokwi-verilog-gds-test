@@ -58,7 +58,7 @@ module mux_cell (
     output wire out
     );
 
-    assign out = sel ? a : b;
+    assign out = sel ? b : a;
 endmodule
 
 module dff_cell (
