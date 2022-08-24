@@ -29,6 +29,11 @@ jobs:
       with:
         path: "requirements.txt"
 
+    - uses: actions/checkout@v2
+      with:
+          repository: s-holst/GDS2WebGL
+          path: GDS2WebGL
+
     # build PDK and fetch OpenLane
     - name: pdk & caravel
       run: |
@@ -53,6 +58,12 @@ jobs:
     - name: create svg
       run: python view.py
 
+    # make html gds viewer with GDS2WebGL
+    - name: GDS2WebGL
+      run: |
+        cd GDS2WebGL
+        python3 gds2webgl.py -i ../runs/wokwi/results/final/gds/*gds -o ../gds.html
+
     # archive the gds and some other important files
     - name: Archive files
       uses: actions/upload-artifact@v2
@@ -65,4 +76,5 @@ jobs:
             runs/wokwi/reports/final_summary_report.csv
             runs/wokwi/reports/synthesis/1-synthesis.stat.rpt.strategy4
             gds_render.svg
+            gds.html
 
