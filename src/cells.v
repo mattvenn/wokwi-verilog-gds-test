@@ -71,5 +71,26 @@ module dff_cell (
     assign notq = !q;
     always @(posedge clk)
         q <= d;
-     
+
+endmodule
+
+module dffsr_cell (
+    input wire clk,
+    input wire d,
+    input wire s,
+    input wire r,
+    output reg q,
+    output wire notq
+    );
+
+    assign notq = !q;
+
+    always @(posedge clk or posedge s or posedge r) begin
+        if (r)
+            q <= '0;
+        else if (s)
+            q <= '1;
+        else
+            q <= d;
+    end
 endmodule
