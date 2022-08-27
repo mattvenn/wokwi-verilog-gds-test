@@ -1,7 +1,7 @@
 # HACK: We need a unique ID for the verilog files so they can exist harmoniously with the rest of the
 # designs that are submitted. So, even if we're not using Wokwi, copy the template project and enter
 # the ID below as the WOKWI_PROJECT_ID so we get a guaranteed unique ID:
-WOKWI_PROJECT_ID=339898704941023827
+WOKWI_PROJECT_ID=0123456789
 
 fetch:
 # HACK: we don't need to fetch this as we have our own verilog source, manually created: src/user_module_339898704941023827.v
