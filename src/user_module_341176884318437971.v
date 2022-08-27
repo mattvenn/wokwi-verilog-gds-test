@@ -1,7 +1,7 @@
 `default_nettype none
 
 // Keep I/O fixed for TinyTapeout
-module user_module_0123456789(
+module user_module_341176884318437971(
     input  wire [7:0] io_in,
     output wire [7:0] io_out
 );
@@ -169,7 +169,7 @@ endmodule
 
 // Carry save adder
 module csa #(
-    integer NUM_BITS = 4
+    parameter NUM_BITS = 4
 ) (
     input  wire [NUM_BITS-1:0] a, // Input A
     input  wire [NUM_BITS-1:0] b, // Input B
@@ -194,7 +194,7 @@ endmodule
 
 // Ripple carry adder
 module rca #(
-    integer NUM_BITS = 4
+    parameter NUM_BITS = 4
 ) (
     input  wire [NUM_BITS-1:0] a,
     input  wire [NUM_BITS-1:0] b,
