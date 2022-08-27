@@ -139,17 +139,25 @@ module fa (
 /*
  * Local signals
  */
-    wire int_a_xor_b;
-    wire int_a_and_b;
-    wire int_a_xor_b_and_cin;
+    // wire int_a_xor_b;
+    // wire int_a_and_b;
+    // wire int_a_xor_b_and_cin;
 /*
  * Logic
  */
-    assign int_a_xor_b         = a ^ b;
-    assign int_a_and_b         = a & b;
-    assign int_a_xor_b_and_cin = int_a_xor_b & cin;
-    assign s                   = int_a_xor_b ^ cin;
-    assign cout                = int_a_xor_b_and_cin | int_a_and_b;
+    // assign int_a_xor_b         = a ^ b;
+    // assign int_a_and_b         = a & b;
+    // assign int_a_xor_b_and_cin = int_a_xor_b & cin;
+    // assign s                   = int_a_xor_b ^ cin;
+    // assign cout                = int_a_xor_b_and_cin | int_a_and_b;
+
+    sky130_fd_sc_hd__fah inst_fa (
+        .A   (a),
+        .B   (b),
+        .CI  (cin),
+        .SUM (s),
+        .COUT(cout)
+    );
 endmodule
 
 // Half adder
@@ -163,8 +171,15 @@ module ha (
 /*
  * Logic
  */
-    assign s    = a ^ b;
-    assign cout = a & b;
+    // assign s    = a ^ b;
+    // assign cout = a & b;
+
+    sky130_fd_sc_hd__ha inst_ha (
+        .A   (a),
+        .B   (b),
+        .SUM (s),
+        .COUT(cout)
+    );
 endmodule
 
 // Carry save adder
