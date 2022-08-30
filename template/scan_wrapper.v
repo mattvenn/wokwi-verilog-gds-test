@@ -45,9 +45,16 @@ module scan_wrapper_USER_MODULE_ID (
 
     // scan chain - link all the flops, with data coming from data_in
     assign scan_data_in = {scan_data_out[NUM_IOS-2:0], data_in};
-    
-    // end of the chain is the last scan flop's out
-    assign data_out = scan_data_out[NUM_IOS-1];
+
+    // end of the chain is a negedge FF to increase hold margin between blocks
+    sky130_fd_sc_hd__dfrtn_1 out_flop (
+        .RESET_B    (1'b1),
+        .CLK_N      (clk),
+        .D          (scan_data_out[NUM_IOS-1]),
+        .Q          (data_out),
+        .VPWR       (1'b1),
+        .VGND       (1'b0)
+    );
 
     // scan flops have a mux on their inputs to choose either data from the user module or the previous flop's output
     // https://antmicro-skywater-pdk-docs.readthedocs.io/en/test-submodules-in-rtd/contents/libraries/sky130_fd_sc_ls/cells/sdfxtp/README.html
