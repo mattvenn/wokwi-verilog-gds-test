@@ -13,8 +13,8 @@ module user_module_341476989274686036(
     localparam OP_SRL = 4'h5;
     localparam OP_SLA = 4'h6;
     localparam OP_ADD = 4'h7;
-    localparam OP_NOP = 4'h8;
-    localparam OP_NOP = 4'h9;
+    localparam OP_NOP1= 4'h8;
+    localparam OP_NOP2= 4'h9;
     localparam OP_JNE = 4'hA;
     localparam OP_JMP = 4'hB;
     localparam OP_LDA = 4'hC;
@@ -24,7 +24,7 @@ module user_module_341476989274686036(
     
     wire clk = io_in[0];
     wire rst_p = io_in[1];
-    wire data_in[3:0] = io_in[5:2];
+    wire[3:0] data_in = io_in[5:2];
     
     reg wcyc;
     assign io_out[5:0] = wcyc ? (rb ? reg_b : reg_a) : pc;
@@ -45,6 +45,7 @@ module user_module_341476989274686036(
     localparam STATE_MEM1  = 2'h2;
     localparam STATE_MEM2  = 2'h3;
     reg[1:0] state;
+    reg[1:0] next_state;
 
     always@(posedge clk or posedge rst_p) begin
         if(rst_p) begin
@@ -75,10 +76,11 @@ module user_module_341476989274686036(
         if(rst_p) wcyc <= 0;
         else 
             case(state)
-            STATE_ADDR: wcyc <= 0;
-            STATE_OP: wcyc <= 0;
-            STATE_MEM1: wcyc <= store ? 1 : 0;
-            STATE_MEM2: wcyc <= 0;
+                STATE_ADDR: wcyc <= 0;
+                STATE_OP: wcyc <= 0;
+                STATE_MEM1: wcyc <= store ? 1 : 0;
+                STATE_MEM2: wcyc <= 0;
+            endcase
     end
     
     always@(*) begin
@@ -105,7 +107,7 @@ module user_module_341476989274686036(
                     OP_SLA: reg_a <= reg_a >>> reg_b[1:0];
                     OP_ADD: reg_a <= reg_a + reg_b;
                 endcase
-            else if(state == STATE_MEM && !store)
+            else if(state == STATE_MEM1 && !store)
                 if(rb) reg_b <= data_in;
                 else reg_a <= data_in;
         end
@@ -118,8 +120,7 @@ module user_module_341476989274686036(
     end    
     
     always@(posedge clk or posedge rst_p) begin
-        if(rst_p) begin
-            pc <= 0;
+        if(rst_p) pc <= 0;
         else if(jne & (reg_a != reg_b)) pc <= {tmp,data_in[3:2]};
         else if(jmp) pc <= {tmp,data_in[3:2]};
     end
