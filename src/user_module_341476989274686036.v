@@ -27,12 +27,12 @@ module user_module_341476989274686036(
     wire[3:0] data_in = io_in[5:2];
     
     wire wcyc;
-    wire[5:0] addr;
+    wire[6:0] addr;
     
     reg[3:0] reg_a;
     reg[3:0] reg_b;
-    reg[5:0] tmp;
-    reg[5:0] pc;
+    reg[6:0] tmp;
+    reg[6:0] pc;
     
     reg[2:0] opcode_lsb;
         
@@ -98,21 +98,21 @@ module user_module_341476989274686036(
     always@(posedge clk or posedge rst_p) begin
         if(rst_p)
             tmp <= 0;
-        else if(state == STATE_MEM1) tmp[5:4] <= data_in[1:0];
+        else if(state == STATE_MEM1) tmp[6:4] <= data_in[2:0];
         else if(state == STATE_MEM2) tmp[3:0] <= data_in;
     end    
     
     always@(posedge clk or posedge rst_p) begin
         if(rst_p) pc <= 0;
-        else if(state == STATE_MEM2 && ((opcode_lsb[2:0]==OP_BLE[2:0]) && (reg_a <= reg_b))) pc <= pc + {tmp[5:4],data_in};
-        else if(state == STATE_MEM2 && ((opcode_lsb[2:0]==OP_BEQ[2:0]) && (reg_a == reg_b))) pc <= pc + {tmp[5:4],data_in};
-        else if(state == STATE_MEM2 && (opcode_lsb[2:0]==OP_JMP)) pc <= {tmp[5:4],data_in};
+        else if(state == STATE_MEM2 && ((opcode_lsb[2:0]==OP_BLE[2:0]) && (reg_a <= reg_b))) pc <= pc + {tmp[6:4],data_in};
+        else if(state == STATE_MEM2 && ((opcode_lsb[2:0]==OP_BEQ[2:0]) && (reg_a == reg_b))) pc <= pc + {tmp[6:4],data_in};
+        else if(state == STATE_MEM2 && (opcode_lsb[2:0]==OP_JMP)) pc <= {tmp[6:4],data_in};
         else pc <= pc + 1;
     end
     
     assign wcyc = ((state == STATE_MEM3) || (state == STATE_MEM4)) & opcode_lsb[1];
     assign addr = (state == STATE_MEM3) ? tmp : pc;
-    assign io_out[5:0] = state == STATE_MEM4 ? (opcode_lsb[0] ? reg_b : reg_a) : addr;
-    assign io_out[6] = wcyc;
+    assign io_out[6:0] = state == STATE_MEM4 ? (opcode_lsb[0] ? reg_b : reg_a) : addr;
+    assign io_out[7] = wcyc;
     
 endmodule
