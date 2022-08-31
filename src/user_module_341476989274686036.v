@@ -5,17 +5,17 @@ module user_module_341476989274686036(
     output [7:0] io_out
     );
     
-    localparam OP_NOP = 4'h0;
+    localparam OP_NGA = 4'h0;
     localparam OP_AND = 4'h1;
     localparam OP_OR  = 4'h2;
     localparam OP_XOR = 4'h3;
     localparam OP_SLL = 4'h4;
     localparam OP_SRL = 4'h5;
-    localparam OP_SLA = 4'h6;
+    localparam OP_SRA = 4'h6;
     localparam OP_ADD = 4'h7;
-    localparam OP_NOP1= 4'h8;
-    localparam OP_NOP2= 4'h9;
-    localparam OP_JNE = 4'hA;
+    localparam OP_NOP = 4'h8;
+    localparam OP_BEQ = 4'h9;
+    localparam OP_BLE = 4'hA;
     localparam OP_JMP = 4'hB;
     localparam OP_LDA = 4'hC;
     localparam OP_LDB = 4'hD;
@@ -33,36 +33,26 @@ module user_module_341476989274686036(
     reg[3:0] reg_b;
     reg[5:0] tmp;
     reg[5:0] pc;
-    reg rb;
-    reg store;
     
-    reg jmp;
-    reg jne;
-    
-    localparam STATE_ADDR  = 3'h0;
-    localparam STATE_OP    = 3'h1;
-    localparam STATE_MEM1  = 3'h2;
-    localparam STATE_MEM2  = 3'h3;
-    localparam STATE_MEM3  = 3'h4;
+    reg[2:0] opcode_lsb;
+        
+    localparam STATE_ADDR  = 3'h0; //Fetch
+    localparam STATE_OP    = 3'h1; //Execute
+    localparam STATE_MEM1  = 3'h2; //AddrH
+    localparam STATE_MEM2  = 3'h3; //AddrL
+    localparam STATE_MEM3  = 3'h4; //Load or Put Write ADDR
+    localparam STATE_MEM4  = 3'h5; //Write DATA
     reg[2:0] state;
     reg[2:0] next_state;
 
     always@(posedge clk or posedge rst_p) begin
         if(rst_p) begin
-            rb <= 0;
-            store <= 0;
-            jmp <= 0;
-            jne <= 0;
+            opcode_lsb <= 0;
         end else begin
-            store <= 0;
-            rb <= 0;
-            jmp <= 0;
-            jne <= 0;
-            if(state == STATE_OP) begin
-                store <= &data_in[3:1];
-                rb <= data_in[0];
-                jmp <= data_in == OP_JMP;
-                jne <= data_in == OP_JNE;
+            if(state == STATE_ADDR)
+                opcode_lsb <= 0;
+            else if(state == STATE_OP) begin
+                opcode_lsb <= data_in[2:0];
             end
         end
     end
@@ -78,7 +68,8 @@ module user_module_341476989274686036(
             STATE_ADDR: next_state <= STATE_OP;
             STATE_OP: if(data_in[3]) next_state <= STATE_MEM1;
             STATE_MEM1: next_state <= STATE_MEM2;
-            STATE_MEM2: if(!jmp & !jne) next_state <= STATE_MEM3;
+            STATE_MEM2: if(opcode_lsb[2]) next_state <= STATE_MEM3;
+            STATE_MEM3: if(opcode_lsb[1]) next_state <= STATE_MEM4;
         endcase
     end
     
@@ -90,15 +81,16 @@ module user_module_341476989274686036(
             if(state == STATE_OP)
                 case(data_in[2:0])
                     OP_AND: reg_a <= reg_a & reg_b;
+                    OP_NGA: reg_a <= ~reg_a + 1;
                     OP_OR:  reg_a <= reg_a | reg_b;
                     OP_XOR: reg_a <= reg_a ^ reg_b;
                     OP_SLL: reg_a <= reg_a << reg_b[1:0];
                     OP_SRL: reg_a <= reg_a >> reg_b[1:0];
-                    OP_SLA: reg_a <= reg_a >>> reg_b[1:0];
+                    OP_SRA: reg_a <= reg_a >>> reg_b[1:0];
                     OP_ADD: reg_a <= reg_a + reg_b;
                 endcase
-            else if(state == STATE_MEM3 && !store)
-                if(rb) reg_b <= data_in;
+            else if(state == STATE_MEM3 && !opcode_lsb[1])
+                if(opcode_lsb[0]) reg_b <= data_in;
                 else reg_a <= data_in;
         end
     end
@@ -112,14 +104,15 @@ module user_module_341476989274686036(
     
     always@(posedge clk or posedge rst_p) begin
         if(rst_p) pc <= 0;
-        else if(state == STATE_MEM2 && (jne & (reg_a != reg_b))) pc <= {tmp[5:4],data_in};
-        else if(state == STATE_MEM2 && jmp) pc <= {tmp[5:4],data_in};
+        else if(state == STATE_MEM2 && ((opcode_lsb[2:0]==OP_BLE[2:0]) && (reg_a <= reg_b))) pc <= pc + {tmp[5:4],data_in};
+        else if(state == STATE_MEM2 && ((opcode_lsb[2:0]==OP_BEQ[2:0]) && (reg_a == reg_b))) pc <= pc + {tmp[5:4],data_in};
+        else if(state == STATE_MEM2 && (opcode_lsb[2:0]==OP_JMP)) pc <= {tmp[5:4],data_in};
         else pc <= pc + 1;
     end
     
-    assign wcyc = (state == STATE_MEM3) & store;
+    assign wcyc = ((state == STATE_MEM3) || (state == STATE_MEM4)) & opcode_lsb[1];
     assign addr = (state == STATE_MEM3) ? tmp : pc;
-    assign io_out[5:0] = wcyc ? (rb ? reg_b : reg_a) : addr;
+    assign io_out[5:0] = state == STATE_MEM4 ? (opcode_lsb[0] ? reg_b : reg_a) : addr;
     assign io_out[6] = wcyc;
     
 endmodule
