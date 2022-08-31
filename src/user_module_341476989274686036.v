@@ -25,6 +25,7 @@ module user_module_341476989274686036(
     wire clk = io_in[0];
     wire rst_p = io_in[1];
     wire[3:0] data_in = io_in[5:2];
+    wire fast = io_in[7];
     
     wire wcyc;
     wire[6:0] addr;
@@ -63,7 +64,7 @@ module user_module_341476989274686036(
     end 
     
     always@(*) begin
-        next_state <= STATE_ADDR;
+        next_state <= fast ? STATE_OP : STATE_ADDR;
         case(state)
             STATE_ADDR: next_state <= STATE_OP;
             STATE_OP: if(data_in[3]) next_state <= STATE_MEM1;
@@ -107,7 +108,7 @@ module user_module_341476989274686036(
         else if(state == STATE_MEM2 && ((opcode_lsb[2:0]==OP_BLE[2:0]) && (reg_a <= reg_b))) pc <= pc + {tmp[6:4],data_in};
         else if(state == STATE_MEM2 && ((opcode_lsb[2:0]==OP_BEQ[2:0]) && (reg_a == reg_b))) pc <= pc + {tmp[6:4],data_in};
         else if(state == STATE_MEM2 && (opcode_lsb[2:0]==OP_JMP)) pc <= {tmp[6:4],data_in};
-        else pc <= pc + 1;
+        else if(state == STATE_OP) pc <= pc + 1;
     end
     
     assign wcyc = ((state == STATE_MEM3) || (state == STATE_MEM4)) & opcode_lsb[1];
