@@ -26,13 +26,12 @@ module user_module_341476989274686036(
     wire rst_p = io_in[1];
     wire[3:0] data_in = io_in[5:2];
     
-    reg wcyc;
-    assign io_out[5:0] = wcyc ? (rb ? reg_b : reg_a) : pc;
-    assign io_out[6] = wcyc;
+    wire wcyc;
+    wire[5:0] addr;
     
     reg[3:0] reg_a;
     reg[3:0] reg_b;
-    reg[3:0] tmp;
+    reg[5:0] tmp;
     reg[5:0] pc;
     reg rb;
     reg store;
@@ -40,12 +39,13 @@ module user_module_341476989274686036(
     reg jmp;
     reg jne;
     
-    localparam STATE_ADDR  = 2'h0;
-    localparam STATE_OP    = 2'h1;
-    localparam STATE_MEM1  = 2'h2;
-    localparam STATE_MEM2  = 2'h3;
-    reg[1:0] state;
-    reg[1:0] next_state;
+    localparam STATE_ADDR  = 3'h0;
+    localparam STATE_OP    = 3'h1;
+    localparam STATE_MEM1  = 3'h2;
+    localparam STATE_MEM2  = 3'h3;
+    localparam STATE_MEM3  = 3'h4;
+    reg[2:0] state;
+    reg[2:0] next_state;
 
     always@(posedge clk or posedge rst_p) begin
         if(rst_p) begin
@@ -72,23 +72,13 @@ module user_module_341476989274686036(
         else state <= next_state;
     end 
     
-    always@(posedge clk or posedge rst_p) begin
-        if(rst_p) wcyc <= 0;
-        else 
-            case(state)
-                STATE_ADDR: wcyc <= 0;
-                STATE_OP: wcyc <= 0;
-                STATE_MEM1: wcyc <= store ? 1 : 0;
-                STATE_MEM2: wcyc <= 0;
-            endcase
-    end
-    
     always@(*) begin
         next_state <= STATE_ADDR;
         case(state)
             STATE_ADDR: next_state <= STATE_OP;
             STATE_OP: if(data_in[3]) next_state <= STATE_MEM1;
-            STATE_MEM1: if(jmp | jne) next_state <= STATE_MEM2;
+            STATE_MEM1: next_state <= STATE_MEM2;
+            STATE_MEM2: if(!jmp & !jne) next_state <= STATE_MEM3;
         endcase
     end
     
@@ -107,7 +97,7 @@ module user_module_341476989274686036(
                     OP_SLA: reg_a <= reg_a >>> reg_b[1:0];
                     OP_ADD: reg_a <= reg_a + reg_b;
                 endcase
-            else if(state == STATE_MEM1 && !store)
+            else if(state == STATE_MEM3 && !store)
                 if(rb) reg_b <= data_in;
                 else reg_a <= data_in;
         end
@@ -116,13 +106,20 @@ module user_module_341476989274686036(
     always@(posedge clk or posedge rst_p) begin
         if(rst_p)
             tmp <= 0;
-        else if(state == STATE_MEM1) tmp = data_in;
+        else if(state == STATE_MEM1) tmp[5:4] <= data_in[1:0];
+        else if(state == STATE_MEM2) tmp[3:0] <= data_in;
     end    
     
     always@(posedge clk or posedge rst_p) begin
         if(rst_p) pc <= 0;
-        else if(jne & (reg_a != reg_b)) pc <= {tmp,data_in[3:2]};
-        else if(jmp) pc <= {tmp,data_in[3:2]};
+        else if(state == STATE_MEM2 && (jne & (reg_a != reg_b))) pc <= {tmp[5:4],data_in};
+        else if(state == STATE_MEM2 && jmp) pc <= {tmp[5:4],data_in};
+        else pc <= pc + 1;
     end
-
+    
+    assign wcyc = (state == STATE_MEM3) & store;
+    assign addr = (state == STATE_MEM3) ? tmp : pc;
+    assign io_out[5:0] = wcyc ? (rb ? reg_b : reg_a) : addr;
+    assign io_out[6] = wcyc;
+    
 endmodule
