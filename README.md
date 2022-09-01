@@ -170,7 +170,7 @@ I am a bit late to the party. I've started to think about the design on August, 
 
 ☑️ Implement the design idea using Wokwi
 
-☑️ Edit the [Makefile](Makefile) and change the WOKWI_PROJECT_ID to match the project. → It's here: https://wokwi.com/projects/341613366899376723
+☑️ Edit the [Makefile](Makefile) and change the WOKWI_PROJECT_ID to match the project. → It's here: https://wokwi.com/projects/341614346808328788
 
 🔲 Share your GDS on twitter, tag it #tinytapeout and [link me](https://twitter.com/matthewvenn)!
 
