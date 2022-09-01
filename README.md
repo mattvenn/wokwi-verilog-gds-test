@@ -1,10 +1,6 @@
+*(Please note that is a forked repository. Details of the design are described at the very end of this `README.md`. Go to https://tinytapeout.com for instructions!)*
+
 ![](../../workflows/wokwi/badge.svg)
-
-Go to https://tinytapeout.com for instructions!
-
-# How to change the Wokwi project
-
-Edit the [Makefile](Makefile) and change the WOKWI_PROJECT_ID to match your project.
 
 # What is this about?
 
@@ -26,8 +22,13 @@ When the action is complete, you can [click here](https://github.com/mattvenn/wo
 * runs/wokwi/reports/synthesis/1-synthesis.stat.rpt.strategy4 - list of the [standard cells](https://www.zerotoasiccourse.com/terminology/standardcell/) used by your design
 * runs/wokwi/results/final/gds/user_module.gds - the final [GDS](https://www.zerotoasiccourse.com/terminology/gds2/) file needed to make your design
 
-# What next?
+# Status/TODOs
 
-* Share your GDS on twitter, tag it #tinytapeout and [link me](https://twitter.com/matthewvenn)!
-* [Submit it to be made](https://docs.google.com/forms/d/e/1FAIpQLSc3ZF0AHKD3LoZRSmKX5byl-0AzrSK8ADeh0DtkZQX0bbr16w/viewform?usp=sf_link)
-* [Join the community](https://discord.gg/rPK2nSjxy8)
+I am a bit late to the party. I've started to think about the design on August, 31st - and submission deadline is already one day later on September, 1st.
+
+🔲 Describe the design idea
+🔲 Implement the design idea using Wokwi
+🔲 Edit the [Makefile](Makefile) and change the WOKWI_PROJECT_ID to match the project.
+🔲 Share your GDS on twitter, tag it #tinytapeout and [link me](https://twitter.com/matthewvenn)!
+🔲 [Submit it to be made](https://docs.google.com/forms/d/e/1FAIpQLSc3ZF0AHKD3LoZRSmKX5byl-0AzrSK8ADeh0DtkZQX0bbr16w/viewform?usp=sf_link)
+🔲 [Join the community](https://discord.gg/rPK2nSjxy8)
