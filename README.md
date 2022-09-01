@@ -86,9 +86,11 @@ We define four input signals for every relevant object involved in the puzzle:
 - **R** for the situation on the **r**ight bank being under control (no object-X-eats-object-Y situation),
   where 1 means "everything is fine" (✔️) and 0 means "situation is out of control" (❌).
 - **E** summary of the situations on both river banks (no object-X-eats-object-Y situation),
-  where 1 means "**e**verything is fine" (✔️) and 0 means "situation is out of control" (❌). → Game is lost. ❌❌❌
+  where 1 means "**e**verything is fine" (✔️) and 0 means "situation is out of control" (❌).
+  → Game is lost. ❌❌❌
 - **A** as an indicator that **a**ll objects have reached the right bank of the river,
-  where 1 means "yes" (✔️) and 0 means "no" (❌). → Game is won! 🎉🎉🎉
+  where 1 means "yes" (✔️) and 0 means "no" (❌).
+  → Game is won! 🎉🎉🎉
 
 **L** and **R** are intermediate signals indicating on which side of the river a situation has occured why the player has lost the game.
 
@@ -164,11 +166,11 @@ A = F•W•G•C
 
 I am a bit late to the party. I've started to think about the design on August, 31st - and submission deadline is already one day later on September, 1st.
 
-🔲 Describe the design idea
+☑️ Describe the design idea
 
-🔲 Implement the design idea using Wokwi
+☑️ Implement the design idea using Wokwi
 
-🔲 Edit the [Makefile](Makefile) and change the WOKWI_PROJECT_ID to match the project.
+☑️ Edit the [Makefile](Makefile) and change the WOKWI_PROJECT_ID to match the project. → It's here: https://wokwi.com/projects/341613366899376723
 
 🔲 Share your GDS on twitter, tag it #tinytapeout and [link me](https://twitter.com/matthewvenn)!
 
@@ -181,3 +183,5 @@ I am a bit late to the party. I've started to think about the design on August, 
 🔲 Improve the implementation to work around the hardware limitations (e.g. inputs should be de-bounced as mechanical switches are used).
 
 🔲 Add more output signals (e.g. indicating if game was lost because 🐺-has-eaten-🐐 or 🐐-has-eaten-🥬).
+
+🔲 Describe the signal mapping to the ASIC hardware I/O pins/ Wokwi user interface in the simulation
