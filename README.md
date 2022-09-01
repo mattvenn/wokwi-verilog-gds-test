@@ -173,4 +173,6 @@ I am a bit late to the party. I've started to think about the design on August, 
 
 🔲 Improve the implementation to work around the current limitations.
 
+🔲 Improve the implementation to work around the hardware limitations (e.g. inputs should be de-bounced as mechanical switches are used).
+
 🔲 Add more output signals (e.g. indicating if game was lost because 🐺-has-eaten-🐐 or 🐐-has-eaten-🥬).
