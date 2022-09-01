@@ -26,11 +26,11 @@ When the action is complete, you can [click here](https://github.com/mattvenn/wo
 
 The story of the [wolf, goat and cabbage problem](https://en.wikipedia.org/wiki/Wolf,_goat_and_cabbage_problem), quoted from wikipedia with some emojis added for later use in visualization:
 
->A farmer (🧑‍🌾) went to a market and purchased a wolf (🐺), a goat (🐐), and a cabbage (🥬). On his way home, the 🧑‍🌾 came to the bank of a river (〰〰〰〰) and rented a boat (🛶). But crossing the river by 🛶, the 🧑‍🌾 could carry only himself and a single one of his purchases: the 🐺, the 🐐, or the 🥬.
+>A farmer (🧑‍🌾) went to a market and purchased a wolf (🐺), a goat (🐐), and a cabbage (🥬). On his way home, the 🧑‍🌾 came to the bank of a river (〰〰) and rented a boat (🛶). But crossing the river by 🛶, the 🧑‍🌾 could carry only himself and a single one of his purchases: the 🐺, the 🐐, or the 🥬.
 >
 >If left unattended together, the 🐺 would eat the 🐐, or the 🐐 would eat the 🥬.
 >
->The 🧑‍🌾's challenge was to carry himself and his purchases to the far bank of the 〰〰〰〰 leaving each purchase intact.
+>The 🧑‍🌾's challenge was to carry himself and his purchases to the far bank of the 〰〰 leaving each purchase intact.
 
 The solution to the problem is known. However, this project wants to allow the interactive game of this puzzle.
 
@@ -99,22 +99,22 @@ We'll work with the following truth table with extended explanations:
 |🧑‍🌾/🚣|🐺|🐐|🥬|Scenario          |Situation<br />on the<br />left bank<br />under control?|Situation<br />on the<br />right bank<br />under control?|Everything<br />under<br />control?|All on<br />the right<br />bank?|
 |----------|----|----|----|------------------|:-------:|:--------:|:-----:|:---:|
 |F *(in)* |W *(in)*|G *(in)*|C *(in)*|               |L *(out)*|R *(out)*|E *(out)*|A *(out)*|
-|0         |0   |0   |0   |🐺🐐🥬🚣 〰〰〰〰  |✔️       |✔️        |✔️     |❌    |
-|0         |0   |0   |1   |🐺🐐🚣 〰〰〰〰 🥬 |✔️       |✔️        |✔️     |❌    |
-|0         |0   |1   |0   |🐺🥬🚣 〰〰〰〰 🐐 |✔️       |✔️        |✔️     |❌    |
-|0         |0   |1   |1   |🐺🚣 〰〰〰〰 🐐🥬❌|✔️       |❌         |❌      |❌    |
-|0         |1   |0   |0   |🐐🥬🚣 〰〰〰〰 🐺 |✔️       |✔️        |✔️     |❌    |
-|0         |1   |0   |1   |🐐🚣 〰〰〰〰 🐺🥬 |✔️       |✔️        |✔️     |❌    |
-|0         |1   |1   |0   |🥬🚣 〰〰〰〰 🐺🐐❌|✔️       |❌         |❌      |❌    |
-|0         |1   |1   |1   |🚣 〰〰〰〰 🐺🐐🥬❌|✔️       |❌         |❌      |❌    |
-|1         |0   |0   |0   |🐺🐐🥬❌ 〰〰〰〰 🚣|❌        |✔️        |❌      |❌    |
-|1         |0   |0   |1   |🥬🚣 〰〰〰〰 🐺🐐❌|✔️       |❌         |❌      |❌    |
-|1         |0   |1   |0   |🐺🥬 〰〰〰〰 🚣🐐 |✔️       |✔️        |✔️     |❌    |
-|1         |0   |1   |1   |🐺 〰〰〰〰 🚣🐐🥬 |✔️       |✔️        |✔️     |❌    |
-|1         |1   |0   |0   |🐐🥬❌ 〰〰〰〰 🚣🐺|❌        |✔️        |❌      |❌    |
-|1         |1   |0   |1   |🐐 〰〰〰〰 🚣🐺🥬 |✔️       |✔️        |✔️     |❌    |
-|1         |1   |1   |0   |🥬 〰〰〰〰 🚣🐺🐐 |✔️       |✔️        |✔️     |❌    |
-|1         |1   |1   |1   | 〰〰〰〰 🚣🐺🐐🥬🎉|✔️       |✔️        |✔️     |✔️   |
+|0         |0   |0   |0   |🐺🐐🥬🚣 〰〰  |✔️       |✔️        |✔️     |❌    |
+|0         |0   |0   |1   |🐺🐐🚣 〰〰 🥬 |✔️       |✔️        |✔️     |❌    |
+|0         |0   |1   |0   |🐺🥬🚣 〰〰 🐐 |✔️       |✔️        |✔️     |❌    |
+|0         |0   |1   |1   |🐺🚣 〰〰 🐐🥬❌|✔️       |❌         |❌      |❌    |
+|0         |1   |0   |0   |🐐🥬🚣 〰〰 🐺 |✔️       |✔️        |✔️     |❌    |
+|0         |1   |0   |1   |🐐🚣 〰〰 🐺🥬 |✔️       |✔️        |✔️     |❌    |
+|0         |1   |1   |0   |🥬🚣 〰〰 🐺🐐❌|✔️       |❌         |❌      |❌    |
+|0         |1   |1   |1   |🚣 〰〰 🐺🐐🥬❌|✔️       |❌         |❌      |❌    |
+|1         |0   |0   |0   |🐺🐐🥬❌ 〰〰 🚣|❌        |✔️        |❌      |❌    |
+|1         |0   |0   |1   |🥬🚣 〰〰 🐺🐐❌|✔️       |❌         |❌      |❌    |
+|1         |0   |1   |0   |🐺🥬 〰〰 🚣🐐 |✔️       |✔️        |✔️     |❌    |
+|1         |0   |1   |1   |🐺 〰〰 🚣🐐🥬 |✔️       |✔️        |✔️     |❌    |
+|1         |1   |0   |0   |🐐🥬❌ 〰〰 🚣🐺|❌        |✔️        |❌      |❌    |
+|1         |1   |0   |1   |🐐 〰〰 🚣🐺🥬 |✔️       |✔️        |✔️     |❌    |
+|1         |1   |1   |0   |🥬 〰〰 🚣🐺🐐 |✔️       |✔️        |✔️     |❌    |
+|1         |1   |1   |1   | 〰〰 🚣🐺🐐🥬🎉|✔️       |✔️        |✔️     |✔️   |
 
 ## The Logic
 
