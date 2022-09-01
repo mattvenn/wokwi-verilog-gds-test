@@ -172,7 +172,9 @@ I am a bit late to the party. I've started to think about the design on August, 
 
 ☑️ Edit the [Makefile](Makefile) and change the WOKWI_PROJECT_ID to match the project. → It's here: https://wokwi.com/projects/341614346808328788
 
-🔲 Share your GDS on twitter, tag it #tinytapeout and [link me](https://twitter.com/matthewvenn)!
+☑️ Enable GitHub Actions
+
+🔲 Share your GDS on twitter, tag it #tinytapeout and [@matthewvenn](https://twitter.com/matthewvenn)!
 
 🔲 [Submit it to be made](https://docs.google.com/forms/d/e/1FAIpQLSc3ZF0AHKD3LoZRSmKX5byl-0AzrSK8ADeh0DtkZQX0bbr16w/viewform?usp=sf_link)
 
