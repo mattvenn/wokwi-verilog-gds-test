@@ -126,7 +126,8 @@ The function for output L can be written in the follwoing minimal form, where ..
 * f•g means "f logical-AND g" (AND gate)
 * h+k means "h logical-OR k" (OR gate)
 
-L = W•C + ~F + G
+L = ~F + C + G
+*(In text: everything is okay on the left in scenarios where 🚣 is on the left OR 🥬 OR 🐐 is on the right. Note that these are not exclusive ORs!)*
 
 
 The function for output R can be written in the follwoing minimal form, where ...
