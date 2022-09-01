@@ -1,4 +1,4 @@
-WOKWI_PROJECT_ID=341613366899376723
+WOKWI_PROJECT_ID=341614346808328788
 
 fetch:
 	curl https://wokwi.com/api/projects/$(WOKWI_PROJECT_ID)/verilog > src/user_module_$(WOKWI_PROJECT_ID).v
