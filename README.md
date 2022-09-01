@@ -171,8 +171,9 @@ The design uses 4 input pins for the 4 input signals:
 * IN1: input signal **F** for the position of the **f**armer (🧑‍🌾/🚣)
 * IN2: input signal **W** for the position of the **w**olf (🐺)
 * IN3: input signal **G** for the position of the **g**oat (🐐)
-* IN4: input signal **C** for the position of the **c**abbage (🥬),
-* IN5..IN7: *not connected* because not required by the current design
+* IN4: input signal **C** for the position of the **c**abbage (🥬)
+* IN5: Planned to implement an easter egg
+* IN6 and IN7: *not connected* because not required by the current design
 
 All four input signals can be set by using an individual sliding switch.
 
@@ -192,8 +193,19 @@ The design uses the following output pins:
 * OUT0+OUT3 (connected): output signal **~E**, i.e. the top and bottom segments light up, when the game is over ❌❌❌ due to an unattended situation on *any* river bank side
 * OUT1+OUT2 (connected): output signal **~R** i.e. the top-right and bottom-right segments light up, to indicate an unattended situation on the *right* river bank (game over ❌)
 * OUT4+OUT5 (connected): output signal **~L** i.e. the top-left and bottom-left segments light up, to indicate an unattended situation on the *left* river bank (game over ❌)
-* OUT6: currently pulled to GND as there is no signal/status to be shown on the middle segment (may be used for an easter egg soon!)
+* OUT6: Planned to implement an easter egg
 * OUT7: output signal **A** to light up the "dot LED" of the 7 segment display as an indicator that all objects have reached the right bank of the river and the game is won! 🎉🎉🎉
+
+
+# Easter egg
+
+There's a nice xkcd comic about the puzzle:
+
+![xkcd_logic_boat](https://user-images.githubusercontent.com/6305922/187967352-cbd9ec3f-7463-44b8-8ff1-38ac7cb35613.png)
+
+*(Source: https://xkcd.com/1134/ - This work is licensed under a Creative Commons Attribution-NonCommercial 2.5 License.)*
+
+And there's right another one: https://xkcd.com/2348/
 
 
 # Status/TODOs
@@ -209,6 +221,8 @@ I am a bit late to the party. I've started to think about the design on August, 
 ☑️ Enable GitHub Actions
 
 ☑️ Describe the signal mapping to the ASIC hardware I/O pins/ Wokwi user interface in the simulation
+
+☑️ Hide easter egg (WIP)
 
 🔲 Share your GDS on twitter, tag it #tinytapeout and [@matthewvenn](https://twitter.com/matthewvenn)!
 
