@@ -86,9 +86,9 @@ We define four input signals for every relevant object involved in the puzzle:
 - **R** for the situation on the **r**ight bank being under control (no object-X-eats-object-Y situation),
   where 1 means "everything is fine" (✔️) and 0 means "situation is out of control" (❌).
 - **E** summary of the situations on both river banks (no object-X-eats-object-Y situation),
-  where 1 means "**e**verything is fine" (✔️) and 0 means "situation is out of control" (❌). Game is lost.
+  where 1 means "**e**verything is fine" (✔️) and 0 means "situation is out of control" (❌). → Game is lost. ❌❌❌
 - **A** as an indicator that **a**ll objects have reached the right bank of the river,
-  where 1 means "yes" (✔️) and 0 means "no" (❌).
+  where 1 means "yes" (✔️) and 0 means "no" (❌). → Game is won! 🎉🎉🎉
 
 **L** and **R** are intermediate signals indicating on which side of the river a situation has occured why the player has lost the game.
 
@@ -96,7 +96,7 @@ There are some limitiations that are not covered by the current implementation, 
 
 We'll work with the following truth table with extended explanations:
 
-|🧑‍🌾/🚣|🐺|🐐|🥬|Scenario          |Situation on<br />the left bank<br />under control?|Situation on<br />the right bank<br />under control?|Everything<br />under<br />control?|All on<br />the right<br />bank?|
+|🧑‍🌾/🚣|🐺|🐐|🥬|Scenario          |Situation<br />on the<br />left bank<br />under control?|Situation<br />on the<br />right bank<br />under control?|Everything<br />under<br />control?|All on<br />the right<br />bank?|
 |----------|----|----|----|------------------|:-------:|:--------:|:-----:|:---:|
 |F *(in)* |W *(in)*|G *(in)*|C *(in)*|               |L *(out)*|R *(out)*|E *(out)*|A *(out)*|
 |0         |0   |0   |0   |🐺🐐🥬🚣 〰〰〰〰  |✔️       |✔️        |✔️     |❌    |
@@ -118,24 +118,28 @@ We'll work with the following truth table with extended explanations:
 
 ## The Logic
 
-There are nice tools that support finding minimized boolean functions to generate the output signals from the input signals, e.g. http://tma.main.jp/logic/index_en.html. However, you can also do this manually!
+There are nice tools that support finding minimized boolean functions to generate the output signals from the input signals, e.g. http://tma.main.jp/logic/index_en.html. However, you can also do this manually! Note: Multiple minimal function forms are possible! I've picked those which I like best.
 
 The function for output L can be written in the follwoing minimal form, where ...
 
 * ~ means negation (NOT gate)
 * f•g means "f logical-AND g" (AND gate)
 * h+k means "h logical-OR k" (OR gate)
+* just as in multiplication and addition, • has a stronger operator binding/ operator priority than +
 
 L = ~F + C + G
-*(In text: everything is okay on the left in scenarios where 🚣 is on the left OR 🥬 OR 🐐 is on the right. Note that these are not exclusive ORs!)*
+
+*(In text: everything is under control on the left bank in scenarios where (🚣 is on the left) OR (🥬 is on the right) OR (🐐 is on the right). Note that the operators are _not_ exclusive ORs!)*
 
 
 The function for output R can be written in the follwoing minimal form, where ...
 
-R = ~W•~C + ~G + F
+R = ~F•~G + F•G + ~W•~C + F•W
+
+*(In text: everything is under control on the right bank in scenarios where (the 🐐 is accompanied by the 🧑‍🌾 independent from the side of the river) OR (🧑‍🌾 accompanies the 🥬 on the left bank) OR (🐺 is accompanied by the 🧑‍🌾 on the right side). Note that the operators are _not_ exclusive ORs again!)*
 
 
-Everything is under control (output E), when the situation is under control on the left **and** on the right river side:
+Everything is under control (output E), when the situation is under control on the left **and** on the right river side. The function can be written in the following form:
 
 E = L•R
 
