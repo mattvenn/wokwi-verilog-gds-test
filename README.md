@@ -150,16 +150,50 @@ The game is won (output A) when all objects are on the right river side:
 A = F•W•G•C
 
 
-> **Note**
-> This is still work in progress. Stay tuned for the follow-up.
-> To be continued...
-
-
 ## Limitiations of the implementation
 
 * **No limit checking**: It's only logic so far. Still, there's no limit checking mechanism that prohibits that more than two objects cross the river at the same time (which of one must be the 🚣).
 * **No sync or coupling:** There's also no mechanism that automatically synchronizes a movement of the 🚣 with the movement of another object which is in the same 🛶.
 * **No history:** The player must play fair and restart the game (move all objects to the left river bank) when they have lost the game and not keep on moving switches when they have actually lost.
+
+
+## ASIC hardware I/O pin mapping and Wokwi user interface in the simulation
+
+### Wokwi simulation secreenshot
+
+![Wokwi design simulation](./wokwi-simulation-io-mapping.png)
+
+### Input pins
+
+The design uses 4 input pins for the 4 input signals:
+
+* IN0: *not connected* because it is typically used for clocked designs and may be used in the future of this design
+* IN1: input signal **F** for the position of the **f**armer (🧑‍🌾/🚣)
+* IN2: input signal **W** for the position of the **w**olf (🐺)
+* IN3: input signal **G** for the position of the **g**oat (🐐)
+* IN4: input signal **C** for the position of the **c**abbage (🥬),
+* IN5..IN7: *not connected* because not required by the current design
+
+All four input signals can be set by using an individual sliding switch.
+
+### Output pins
+
+The design uses 7 output pins for the 4 outut signals.
+
+Why is that? The [TinyTapeout FAQ](https://docs.google.com/document/d/1HeUJ5RWxnGo36LE1jp5CoCfBO91wTzGANzlKC_vVfFI) states:
+
+>Do I have to use the 7 segment?
+>No, you can delete it and put whatever you want there. There’s lots of other components you can choose from the + menu. But if you get a PCB, it will only have the 7 segment on it. You’d need to plug the board into a breadboard and add your extra components after.
+
+So I wanted to leave the option to use the 7 segment display on the final PCB - and the [Wokwi simulation](https://docs.wokwi.com/parts/wokwi-7segment).
+
+The design uses the following output pins:
+
+* OUT0+OUT3 (connected): output signal **~E**, i.e. the top and bottom segments light up, when the game is over ❌❌❌ due to an unattended situation on *any* river bank side
+* OUT1+OUT2 (connected): output signal **~R** i.e. the top-right and bottom-right segments light up, to indicate an unattended situation on the *right* river bank (game over ❌)
+* OUT4+OUT5 (connected): output signal **~L** i.e. the top-left and bottom-left segments light up, to indicate an unattended situation on the *left* river bank (game over ❌)
+* OUT6: currently pulled to GND as there is no signal/status to be shown on the middle segment (may be used for an easter egg soon!)
+* OUT7: output signal **A** to light up the "dot LED" of the 7 segment display as an indicator that all objects have reached the right bank of the river and the game is won! 🎉🎉🎉
 
 
 # Status/TODOs
@@ -174,6 +208,8 @@ I am a bit late to the party. I've started to think about the design on August, 
 
 ☑️ Enable GitHub Actions
 
+☑️ Describe the signal mapping to the ASIC hardware I/O pins/ Wokwi user interface in the simulation
+
 🔲 Share your GDS on twitter, tag it #tinytapeout and [@matthewvenn](https://twitter.com/matthewvenn)!
 
 🔲 [Submit it to be made](https://docs.google.com/forms/d/e/1FAIpQLSc3ZF0AHKD3LoZRSmKX5byl-0AzrSK8ADeh0DtkZQX0bbr16w/viewform?usp=sf_link)
@@ -184,6 +220,5 @@ I am a bit late to the party. I've started to think about the design on August, 
 
 🔲 Improve the implementation to work around the hardware limitations (e.g. inputs should be de-bounced as mechanical switches are used).
 
-🔲 Add more output signals (e.g. indicating if game was lost because 🐺-has-eaten-🐐 or 🐐-has-eaten-🥬).
+🔲 ~Add more output signals (e.g. indicating if game was lost because 🐺-has-eaten-🐐 or 🐐-has-eaten-🥬). (Discarded for now as the user interface is slightly limited!)~
 
-🔲 Describe the signal mapping to the ASIC hardware I/O pins/ Wokwi user interface in the simulation
