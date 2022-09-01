@@ -5,7 +5,7 @@ module tb();
     reg clk = 0;
     reg fast = 1;
     
-    wire[6:0] daout;
+    wire[5:0] daout;
     wire wcyc;
     
     localparam OP_NGA = 4'h0;
@@ -40,55 +40,56 @@ module tb();
 
     always #50 clk = ~clk;
 
+    wire unused;
     user_module_341476989274686036 user_module(
         .io_in     ({fast, 1'b0, data, rst_p, clk}),
-        .io_out    ({wcyc,daout})
+        .io_out    ({wcyc,unused,daout})
     );
     
     always@(*) begin
         if(!wcyc) begin
             case(daout)
-            7'h00: data = OP_NOP;
-            7'h01: data = OP_NOP;
-            7'h02: data = OP_LDA; //LDA 0x05
-            7'h03: data = 4'h0;
-            7'h04: data = 4'hd;
-            7'h05: data = OP_NOP;
-            7'h06: data = OP_LDB;
-            7'h07: data = 4'h0;
-            7'h08: data = 4'h9;
-            7'h09: data = 4'h1;
-            7'h0a: data = OP_NGA;
-            7'h0b: data = OP_AND;
-            7'h0c: data = OP_SLL;
-            7'h0d: data = OP_SRL;
-            7'h0e: data = OP_SLL;
-            7'h0f: data = OP_SRA;
-            7'h10: data = OP_SLL;
-            7'h11: data = OP_OR;
-            7'h12: data = OP_XOR;
-            7'h13: data = OP_ADD; 
-            7'h14: data = OP_BEQ;
-            7'h15: data = 4'h0;
-            7'h16: data = 4'h2;
-            7'h17: data = OP_NOP;
-            7'h18: data = OP_BLE; 
-            7'h19: data = 4'h0;
-            7'h1a: data = 4'h2;
-            7'h1b: data = OP_NOP;
-            7'h1c: data = OP_JMP;
-            7'h1d: data = 4'h2; 
-            7'h1e: data = 4'h0; 
-            7'h1f: data = OP_NOP; 
-            7'h20: data = OP_STA; 
-            7'h21: data = 4'h2; 
-            7'h22: data = 4'h0; 
-            7'h23: data = OP_STB; 
-            7'h24: data = 4'h2; 
-            7'h25: data = 4'h0; 
-            7'h26: data = OP_BLE; 
-            7'h27: data = 4'hf; 
-            7'h28: data = 4'he; 
+            6'h00: data = OP_NOP;
+            6'h01: data = OP_NOP;
+            6'h02: data = OP_LDA; //LDA 0x05
+            6'h03: data = 4'h0;
+            6'h04: data = 4'hd;
+            6'h05: data = OP_NOP;
+            6'h06: data = OP_LDB;
+            6'h07: data = 4'h0;
+            6'h08: data = 4'h9;
+            6'h09: data = 4'h1;
+            6'h0a: data = OP_NGA;
+            6'h0b: data = OP_AND;
+            6'h0c: data = OP_SLL;
+            6'h0d: data = OP_SRL;
+            6'h0e: data = OP_SLL;
+            6'h0f: data = OP_SRA;
+            6'h10: data = OP_SLL;
+            6'h11: data = OP_OR;
+            6'h12: data = OP_XOR;
+            6'h13: data = OP_ADD; 
+            6'h14: data = OP_BEQ;
+            6'h15: data = 4'h0;
+            6'h16: data = 4'h2;
+            6'h17: data = OP_NOP;
+            6'h18: data = OP_BLE; 
+            6'h19: data = 4'h0;
+            6'h1a: data = 4'h2;
+            6'h1b: data = OP_NOP;
+            6'h1c: data = OP_JMP;
+            6'h1d: data = 4'h2; 
+            6'h1e: data = 4'h0; 
+            6'h1f: data = OP_NOP; 
+            6'h20: data = OP_STA; 
+            6'h21: data = 4'h2; 
+            6'h22: data = 4'h0; 
+            6'h23: data = OP_STB; 
+            6'h24: data = 4'h2; 
+            6'h25: data = 4'h0; 
+            6'h26: data = OP_BLE; 
+            6'h27: data = 4'hf; 
+            6'h28: data = 4'he; 
             default: data = OP_NOP;
             endcase
         end
