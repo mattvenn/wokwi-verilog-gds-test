@@ -81,14 +81,14 @@ The player has won as soon as all objects (🧑‍🌾/🚣, 🐺, 🐐 or 🥬)
 We can define the following outut signals to be relevant for the game play:
 
 We define four input signals for every relevant object involved in the puzzle:
-- **L** for the situation on the left bank being under control (no object-X-eats-object-Y situation),
+- **L** for the situation on the **l**eft bank being under control (no object-X-eats-object-Y situation),
   where 1 means "everything is fine" (✔️) and 0 means "situation is out of control" (❌).
-- **R** for the situation on the right bank being under control (no object-X-eats-object-Y situation),
+- **R** for the situation on the **r**ight bank being under control (no object-X-eats-object-Y situation),
   where 1 means "everything is fine" (✔️) and 0 means "situation is out of control" (❌).
 - **E** summary of the situations on both river banks (no object-X-eats-object-Y situation),
-  where 1 means "everything is fine" (✔️) and 0 means "situation is out of control" (❌). Game is lost.
-- **E** summary of the situations on both river banks (no object-X-eats-object-Y situation),
-  where 1 means "everything is fine" (✔️) and 0 means "situation is out of control" (❌).
+  where 1 means "**e**verything is fine" (✔️) and 0 means "situation is out of control" (❌). Game is lost.
+- **A** as an indicator that **a**ll objects have reached the right bank of the river,
+  where 1 means "yes" (✔️) and 0 means "no" (❌).
 
 **L** and **R** are intermediate signals indicating on which side of the river a situation has occured why the player has lost the game.
 
@@ -115,6 +115,32 @@ We'll work with the following truth table with extended explanations:
 |1         |1   |0   |1   |🐐 〰〰〰〰〰〰〰 🚣🐺🥬 |✔️       |✔️        |✔️     |❌    |
 |1         |1   |1   |0   |🥬 〰〰〰〰〰〰〰 🚣🐺🐐 |✔️       |✔️        |✔️     |❌    |
 |1         |1   |1   |1   |〰〰〰〰〰〰〰 🚣🐺🐐🥬🎉|✔️       |✔️        |✔️     |✔️   |
+
+## The Logic
+
+There are nice tools that support finding minimized boolean functions to generate the output signals from the input signals, e.g. http://tma.main.jp/logic/index_en.html. However, you can also do this manually!
+
+The function for output L can be written in the follwoing minimal form, where ...
+
+* ~ means negation (NOT gate)
+* f•g means "f logical-AND g" (AND gate)
+* h+k means "h logical-OR k" (OR gate)
+
+L = W•C + ~F + G
+
+
+The function for output R can be written in the follwoing minimal form, where ...
+
+R = ~W•~C + ~G + F
+
+
+Everything is under control (output E), when the situation is under control on the left **and** on the right river side:
+
+E = L•R
+
+The game is won (output A) when all objects are on the right river side:
+
+A = F•W•G•C
 
 
 > **Note**
