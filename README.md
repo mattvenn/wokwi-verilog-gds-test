@@ -97,8 +97,8 @@ There are some limitiations that are not covered by the current implementation, 
 We'll work with the following truth table with extended explanations:
 
 |🧑‍🌾/🚣|🐺|🐐|🥬|Scenario          |Situation on<br />the left bank<br />under control?|Situation on<br />the right bank<br />under control?|Everything<br />under<br />control?|All on<br />the right<br />bank?|
-|----------|----|----|----|------------------|---------|----------|-------|-----|
-|in F      |in W|in G|in C|                        |out L        |out R  |out E   |out A  |
+|----------|----|----|----|------------------|:-------:|:--------:|:-----:|:---:|
+|F *(in)* |W *(in)*|G *(in)*|C *(in)*|               |L *(out)*|R *(out)*|E *(out)*|A *(out)*|
 |0         |0   |0   |0   |🐺🐐🥬🚣 〰〰〰〰  |✔️       |✔️        |✔️     |❌    |
 |0         |0   |0   |1   |🐺🐐🚣 〰〰〰〰 🥬 |✔️       |✔️        |✔️     |❌    |
 |0         |0   |1   |0   |🐺🥬🚣 〰〰〰〰 🐐 |✔️       |✔️        |✔️     |❌    |
