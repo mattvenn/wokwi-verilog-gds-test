@@ -224,11 +224,11 @@ I am a bit late to the party. I've started to think about the design on August, 
 
 ☑️ Hide easter egg (WIP)
 
-🔲 Share your GDS on twitter, tag it #tinytapeout and [@matthewvenn](https://twitter.com/matthewvenn)!
+☑️ Share your GDS on twitter, tag it #tinytapeout and [@matthewvenn](https://twitter.com/matthewvenn)!
 
-🔲 [Submit it to be made](https://docs.google.com/forms/d/e/1FAIpQLSc3ZF0AHKD3LoZRSmKX5byl-0AzrSK8ADeh0DtkZQX0bbr16w/viewform?usp=sf_link)
+☑️ [Submit it to be made](https://docs.google.com/forms/d/e/1FAIpQLSc3ZF0AHKD3LoZRSmKX5byl-0AzrSK8ADeh0DtkZQX0bbr16w/viewform?usp=sf_link)
 
-🔲 [Join the community](https://discord.gg/rPK2nSjxy8)
+☑️ [Join the community](https://discord.gg/rPK2nSjxy8)
 
 🔲 Improve the implementation to work around the current limitations.
 
