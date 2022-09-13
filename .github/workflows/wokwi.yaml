@@ -107,14 +107,20 @@ jobs:
         path: 'gds_render.svg'
         key: ${{ runner.os }}-svg-${{ github.run_id }}
 
-  webgl:
+  viewer:
     needs: gds
     runs-on: ubuntu-latest
     steps:
-    - name: checkout repo
+    - name: checkout GDS2glTF repo
       uses: actions/checkout@v2
       with:
-        repository: s-holst/GDS2WebGL
+        repository: mbalestrini/GDS2glTF
+
+    - name: checkout tinytapeout_gds_viewer repo
+      uses: actions/checkout@v2
+      with:
+        repository: mbalestrini/tinytapeout_gds_viewer
+        path: viewer
 
     - name: setup python
       uses: actions/setup-python@v4
@@ -127,16 +133,18 @@ jobs:
         path: runs
         key: ${{ runner.os }}-runs-${{ github.run_id }}
 
-    - name: GDS2WebGL
+    - name: gds2gltf
       run: |
-        python -m pip install gdspy pyclipper mapbox_earcut
-        python3 gds2webgl.py -i runs/wokwi/results/final/gds/*.gds -o index.html
+        python -m pip install -r requirements.txt
+        cp runs/wokwi/results/final/gds/*.gds tinytapeout.gds
+        python3 gds2gltf.py tinytapeout.gds
+        cp tinytapeout.gds.gltf viewer/
 
-    - name: populate webgl cache
+    - name: populate viewer cache
       uses: actions/cache@v2
       with:
-        path: index.html
-        key: ${{ runner.os }}-webgl-${{ github.run_id }}
+        path: viewer
+        key: ${{ runner.os }}-viewer-${{ github.run_id }}
 
   artifact:
     needs:
@@ -168,7 +176,7 @@ jobs:
   pages:
     needs:
     - svg
-    - webgl
+    - viewer
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -181,11 +189,11 @@ jobs:
       with:
         path: 'gds_render.svg'
         key: ${{ runner.os }}-svg-${{ github.run_id }}
-    - name: restore webgl cache
+    - name: restore viewer cache
       uses: actions/cache@v2
       with:
-        path: index.html
-        key: ${{ runner.os }}-webgl-${{ github.run_id }}
+        path: viewer
+        key: ${{ runner.os }}-viewer-${{ github.run_id }}
     - name: Setup Pages
       uses: actions/configure-pages@v2
     - name: Upload artifact
@@ -205,8 +213,8 @@ jobs:
         PAGE_URL=${{ needs.pages.outputs.page_url }}
         PAGE_URL=$(echo "$PAGE_URL" | sed -e 's/\/$//')
         cat << EOF >> $GITHUB_STEP_SUMMARY
-        # svg
+        # layout
         ![svg]($PAGE_URL/gds_render.svg)
-        # webgl
-        [open preview]($PAGE_URL)
+        # viewer
+        [open preview]($PAGE_URL/viewer/tinytapeout.html)
         EOF
