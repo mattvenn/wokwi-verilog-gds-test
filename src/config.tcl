@@ -1,7 +1,7 @@
 # User config
 set script_dir [file dirname [file normalize [info script]]]
 
-# HACK: edited this, instead of relying on the Makefile to prep this for us
+# has to match the module name from wokwi
 set ::env(DESIGN_NAME) scan_wrapper_341176884318437971
 
 # save some time
@@ -20,7 +20,7 @@ $::env(DESIGN_DIR)/scan_wrapper_341176884318437971.v"
 
 # absolute die size
 set ::env(FP_SIZING) absolute
-set ::env(DIE_AREA) "0 0 100 100"
+set ::env(DIE_AREA) "0 0 105 105"
 set ::env(FP_CORE_UTIL) 45
 set ::env(PL_BASIC_PLACEMENT) {1}
 
@@ -33,8 +33,13 @@ set ::env(DECAP_CELL) "\
     sky130_ef_sc_hd__decap_12"
 
 # clock
-set ::env(CLOCK_PERIOD) "100"
-set ::env(CLOCK_PORT) "clk"
+set ::env(CLOCK_PERIOD) "10"
+set ::env(CLOCK_PORT) ""
+
+set ::env(BASE_SDC_FILE) $::env(DESIGN_DIR)/base.sdc
+
+set ::env(SYNTH_CLOCK_UNCERTAINITY) 0.20
+set ::env(SYNTH_CLOCK_TRANSITION)   0.15
 
 # don't use power rings or met5
 set ::env(DESIGN_IS_CORE) 0
