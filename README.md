@@ -28,6 +28,7 @@ When the action is complete, you can [click here](https://github.com/mattvenn/wo
 
 # What next?
 
+* Update the [info.yaml](info.yaml) file. The info will be collected and used to make a datachip for the whole chip.
 * Share your GDS on twitter, tag it #tinytapeout and [link me](https://twitter.com/matthewvenn)!
 * [Submit it to be made](https://docs.google.com/forms/d/e/1FAIpQLSc3ZF0AHKD3LoZRSmKX5byl-0AzrSK8ADeh0DtkZQX0bbr16w/viewform?usp=sf_link)
 * [Join the community](https://discord.gg/rPK2nSjxy8)
