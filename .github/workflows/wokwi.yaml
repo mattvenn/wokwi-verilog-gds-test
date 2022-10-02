@@ -38,7 +38,7 @@ jobs:
 
     # run lint to check for gross problems
     - name: lint Verilog
-      run: make lint LINT_USE_DOCKER=yes LINT_DOCKER_TAG=$(VERILATOR_TAG) LINT_DOCKER_IMG=$(VERILATOR_IMAGE_NAME)
+      run: make lint LINT_USE_DOCKER=yes LINT_DOCKER_TAG=$VERILATOR_TAG LINT_DOCKER_IMG=$VERILATOR_IMAGE_NAME
 
     # run the 'harden' rule in the Makefile to use OpenLane to build the GDS
     - name: make GDS
