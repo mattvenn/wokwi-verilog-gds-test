@@ -13,6 +13,9 @@ jobs:
         OPENLANE_ROOT:  /home/runner/openlane
         PDK_ROOT:       /home/runner/pdk
         PDK:            sky130A
+        # Verilator pinned against the cocotb compatible version
+        VERILATOR_TAG:        4.106
+        VERILATOR_IMAGE_NAME: verilator/verilator:$(VERILATOR_TAG)
 
     # ubuntu
     runs-on: ubuntu-latest
@@ -32,6 +35,10 @@ jobs:
     # fetch the Verilog from Wokwi API
     - name: fetch Verilog
       run: make fetch
+
+    # run lint to check for gross problems
+    - name: lint Verilog
+      run: make lint
 
     # run the 'harden' rule in the Makefile to use OpenLane to build the GDS
     - name: make GDS
@@ -57,7 +64,7 @@ jobs:
             print(f'| { "|".join(["-----"] * len(keys)) } |')
             print(f'| { "|".join(report[k] for k in keys) } |')
         EOF
-  
+
     - name: populate src cache
       uses: actions/cache@v2
       with:
