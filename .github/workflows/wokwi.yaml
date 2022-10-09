@@ -6,6 +6,10 @@ permissions:
   pages: write
   id-token: write
 
+defaults:
+  run:
+    working-directory: wokwi
+
 env:
   OPENLANE_TAG:   2022.02.23_02.50.41
   OPENLANE_IMAGE_NAME:    efabless/openlane:$(OPENLANE_TAG)
