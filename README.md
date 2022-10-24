@@ -2,9 +2,9 @@
 
 Go to https://tinytapeout.com for instructions!
 
-We have a new submission repo now: https://github.com/TinyTapeout/tt02-submission-template
-
 # Out of date!
+
+We have a new submission repo now: https://github.com/TinyTapeout/tt02-submission-template
 
 # How to change the Wokwi project
 
